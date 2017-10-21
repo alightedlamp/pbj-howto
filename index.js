@@ -1,48 +1,53 @@
 import $ from 'jquery';
+import { task, instructions } from './instructions';
 
-const instructions = [
-  'Get out a plate. No one likes a mess',
-  'Take bread out of pantry',
-  'Take out peanut butter from pantry',
-  'Take jelly out of fridge',
-  'Take knife out of drawer',
-  'Open peanut butter jar',
-  'Get out two pieces of break and put on plate',
-  'Use knife to get peanut butter out of jar',
-  'Spread on one piece of bread',
-  'Open jelly jar',
-  "Take out a spoon to spread the jelly, because it's easier that way",
-  'Get jelly out of jar and spread on the piece of bread that does not already have peanut button it',
-  'Combine the two pieces of bread',
-  'Chomp 🙃'
-];
+$(() => {
+  $('header h1').after(`<h2 class='subtitle'>${task}</h2>`);
 
-const checkboxes = $('.check');
-const instructionsWrapper = $('.instructions-wrapper');
+  const checkboxes = $('.check');
+  const instructionsWrapper = $('.instructions-wrapper');
 
-let currentStep = 0;
+  const showEnd = () => {
+    $('.instructions p').text('You did it! Good work. 👍');
+  };
+  const swapImg = currentStep => {};
 
-const addStep = currentStep => {
-  $('.instruction p').text(instructions[currentStep]);
-};
+  let currentStep = 0;
 
-$('.lets-go').click(e => {
-  e.preventDefault();
-  $('.instructions-wrapper').css({
-    height: 'inherit',
-    opacity: '1',
-    marginTop: '-100px'
+  const addStep = currentStep => {
+    $('.instruction p').fadeOut(150, () => {
+      $('.instruction p').text(
+        `${currentStep + 1}. ${instructions[currentStep].step}`
+      );
+    });
+    $('.instruction p').fadeIn();
+
+    swapImg(currentStep);
+  };
+
+  $('.lets-go').bind('click', e => {
+    e.preventDefault();
+
+    $('.instructions-wrapper').css({
+      height: 'inherit',
+      opacity: '1',
+      marginTop: '-220px'
+    });
+    $(this).css({
+      opacity: '0',
+      transform: 'translateX(-300px)'
+    });
+
+    addStep(currentStep);
   });
-  $('.lets-go').css({
-    opacity: '0',
-    transform: 'translateX(-300px)'
+
+  $('.next-step').click(e => {
+    e.preventDefault();
+    if (currentStep < instructions.length - 1) {
+      currentStep++;
+      addStep(currentStep);
+    } else {
+      showEnd();
+    }
   });
-
-  addStep(currentStep);
-});
-
-$('.next-step').click(e => {
-  e.preventDefault();
-  addStep(currentStep);
-  currentStep++;
 });
