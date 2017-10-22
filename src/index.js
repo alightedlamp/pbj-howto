@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import { task, instructions } from './instructions';
+import { illustrations } from './illustrations';
 
 $.fn.extend({
   animateCss: function(animationName) {
@@ -25,7 +26,12 @@ $(() => {
   };
   const swapImg = currentStep => {
     // Use images instead of animated illustrations for proof of concept
-    $('instruction img').attr('src', instructions[currentStep].img);
+    // $('instruction img').attr('src', instructions[currentStep].img);
+    $('#image').replaceWith(
+      `<div id="image" class="frame step-${currentStep}">${illustrations[
+        currentStep
+      ].img}</div>`
+    );
   };
 
   let currentStep = 0;
