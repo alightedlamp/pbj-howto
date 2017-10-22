@@ -26,7 +26,7 @@ header {
 //----------------------------------
 //  General App Styles
 //----------------------------------
-header>h1 {
+header > h1 {
   margin-top: 0.75em;
   padding-bottom: 20px;
   border-bottom: 5px dotted $blue;
@@ -63,7 +63,7 @@ header>h1 {
   background-color: white;
 }
 
-.instructions-wrapper>div {
+.instructions-wrapper > div {
   width: 50%;
   height: 350px;
 }
@@ -83,6 +83,10 @@ button {
     color: white;
   }
 }
+
+//--------------------------
+// Instructions Interface
+//--------------------------
 
 .instructions {
   z-index: 1;
@@ -127,7 +131,7 @@ button {
       margin-right: 2em;
       bottom: 0;
       right: 0;
-      transition: .1s;
+      transition: 0.1s;
       &:active {
         transform: translate(4px, 4px);
       }
@@ -138,9 +142,19 @@ button {
 //----------------------------------
 //  Illustrations
 //----------------------------------
+
 .App div#image {
+  //--------------------------
+  // General styles
+  //--------------------------
+
   overflow: hidden;
   background-color: $blue;
+
+  //--------------------------
+  // Shape defaults
+  //--------------------------
+
   div.circle,
   div.rect {
     position: absolute;
@@ -149,35 +163,111 @@ button {
   div.circle {
     border-radius: 50%;
   }
+
+  //--------------------------
+  // Colors
+  //--------------------------
+
   $plate: rgb(211, 235, 255);
   $counter: rgb(66, 66, 92);
-  .circle#circle2 {
-    width: 90px;
-    height: 90px;
-    bottom: 105px;
-    left: -205px;
-    border: 3px solid darken($plate, 30%);
-    transform: translateZ(50px);
-    animation: inner-plate-in 1s forwards;
+
+  //--------------------------
+  // Layers
+  //--------------------------
+
+  #counter {
+    z-index: 3;
   }
-  .circle#circle1 {
-    width: 100px;
-    height: 100px;
-    bottom: 100px;
-    left: -200px;
-    background: $plate;
-    transform: translateZ(50px);
-    animation: outer-plate-in 1s forwards;
+  #outer-plate {
+    z-index: 4;
   }
-  .rect#rect1 {
+  #pb-jar {
+    z-index: 4;
+  }
+  #jelly-jar {
+    z-index: 4;
+  }
+  #pb-lid {
+    z-index: 4;
+  }
+  #jelly-lid {
+    z-index: 4;
+  }
+  #inner-plate {
+    z-index: 5;
+  }
+  #bread-slice-1 {
+    z-index: 6;
+  }
+  #bread-slice-2 {
+    z-index: 6;
+  }
+  #knife {
+    z-index: 7;
+  }
+  #spoon {
+    z-index: 7;
+  }
+  #pb {
+    z-index: 8;
+  }
+  #jelly {
+    z-index: 8;
+  }
+  //--------------------------
+  // Positions & Sizing
+  //--------------------------
+
+  $plate-initial-pos-x: 200px;
+  $plate-initial-pos-y: 120px;
+  $inner-plate-offset: 5px;
+  $plate-size: 100px;
+  #counter {
     bottom: 0;
     height: 100px;
     width: 100%;
     background-color: $counter;
   }
+  #inner-plate {
+    bottom: 125px;
+    left: -205px;
+    width: 90px;
+    height: 90px;
+    border: 3px solid darken($plate, 30%);
+  }
+  #outer-plate {
+    bottom: 120px;
+    left: -200px;
+    width: 100px;
+    height: 100px;
+    background: $plate;
+  }
+
+  //--------------------------
+  // Step Animations
+  //--------------------------
+
+  &.frame {
+    &.step-0 #inner-plate {
+      animation: step-0-inner-plate-in 1s forwards;
+    }
+    &.step-0 #outer-plate {
+      animation: step-0-outer-plate-in 1s forwards;
+    }
+    &.step-1 #inner-plate {
+      animation: step-1-inner-plate-down 1s forwards;
+    }
+    &.step-1 #outer-plate {
+      animation: step-1-outer-plate-down 1s forwards;
+    }
+  }
 }
 
-@keyframes inner-plate-in {
+//--------------------------
+// Animations
+//--------------------------
+
+@keyframes step-0-inner-plate-in {
   from {
     left: -205px;
   }
@@ -185,12 +275,37 @@ button {
     left: 205px;
   }
 }
-
-@keyframes outer-plate-in {
+@keyframes step-0-outer-plate-in {
   from {
     left: -200px;
   }
   to {
     left: 200px;
+  }
+}
+@keyframes step-1-inner-plate-down {
+  from {
+    left: 205px;
+    bottom: 125px;
+    width: 90px;
+  }
+  to {
+    left: 182.5px;
+    bottom: 54px;
+    height: 65px;
+    width: 125px;
+  }
+}
+@keyframes step-1-outer-plate-down {
+  from {
+    left: 200px;
+    bottom: 125px;
+    width: 100px;
+  }
+  to {
+    left: 177px;
+    bottom: 50px;
+    height: 70px;
+    width: 135px;
   }
 }

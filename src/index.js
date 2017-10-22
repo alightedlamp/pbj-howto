@@ -1,17 +1,7 @@
 import $ from 'jquery';
+import velocity from 'velocity-animate';
 import { task, instructions } from './instructions';
 import { illustrations } from './illustrations';
-
-$.fn.extend({
-  animateCss: function(animationName) {
-    var animationEnd =
-      'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-    this.addClass('animated ' + animationName).one(animationEnd, function() {
-      $(this).removeClass('animated ' + animationName);
-    });
-    return this;
-  }
-});
 
 $(() => {
   $('header h1').after(`<h2 class='subtitle'>${task}</h2>`);
@@ -25,8 +15,7 @@ $(() => {
     $('#next-step').text('Reset');
   };
   const swapImg = currentStep => {
-    // Use images instead of animated illustrations for proof of concept
-    // $('instruction img').attr('src', instructions[currentStep].img);
+    console.log('replacing img');
     $('#image').replaceWith(
       `<div id="image" class="frame step-${currentStep}">${illustrations[
         currentStep
@@ -64,11 +53,10 @@ $(() => {
     }
 
     $('.instruction p').fadeIn(300);
-
     swapImg(currentStep);
   };
 
-  $('.lets-go').bind('click', e => {
+  $('#lets-go').bind('click', e => {
     e.preventDefault();
 
     $('.instructions-wrapper').css({
