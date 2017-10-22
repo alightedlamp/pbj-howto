@@ -1,7 +1,6 @@
 import $ from 'jquery';
-import velocity from 'velocity-animate';
 import { task, instructions } from './instructions';
-import { illustrations } from './illustrations';
+import { illustration } from './illustrations';
 
 $(() => {
   $('header h1').after(`<h2 class='subtitle'>${task}</h2>`);
@@ -16,11 +15,8 @@ $(() => {
   };
   const swapImg = currentStep => {
     console.log('replacing img');
-    $('#image').replaceWith(
-      `<div id="image" class="frame step-${currentStep}">${illustrations[
-        currentStep
-      ].img}</div>`
-    );
+    $('#image').removeClass(`step-${currentStep - 1}`);
+    $('#image').addClass(`step-${currentStep}`);
   };
 
   let currentStep = 0;
@@ -48,7 +44,14 @@ $(() => {
         $('.instruction p').text(instructions[currentStep].step)
       );
     } else {
-      $('#step-num').text(currentStep + 1);
+      $('#step-num')
+      .text(currentStep + 1)
+      .fadeIn(150, () => {
+        $('#step-num').css({
+          top: '-15px',
+          left: '-15px'
+        });
+      });
       $('.instruction p').text(instructions[currentStep].step);
     }
 
@@ -59,15 +62,17 @@ $(() => {
   $('#lets-go').bind('click', e => {
     e.preventDefault();
 
-    $('.instructions-wrapper').css({
-      height: 'inherit',
-      opacity: '1',
-      marginTop: '-220px'
-    });
-    $(this).css({
+    $('#lets-go').css({
       opacity: '0',
       transform: 'translateX(-300px)'
     });
+    $('#intro').css('opacity', 0);
+    $('.instructions-wrapper').css({
+      height: 'inherit',
+      opacity: '1',
+      marginTop: '-175px'
+    });
+    $('#image').html(`${illustration}`);
 
     addStep(currentStep);
   });
@@ -81,6 +86,7 @@ $(() => {
       showEnd();
     } else {
       currentStep = 0;
+      addStep(currentStep);
     }
   });
 });

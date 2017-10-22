@@ -20,7 +20,7 @@ section {
 }
 
 header {
-  padding: 1em;
+  padding: 1em 1em 0 1em;
 }
 
 //----------------------------------
@@ -51,8 +51,9 @@ header > h1 {
   overflow: hidden;
 }
 
-.intro {
-  padding: 1em;
+#intro {
+  padding: 0 1em 1em 1em;
+  transition: .5s;
 }
 
 .instructions-wrapper {
@@ -107,7 +108,7 @@ button {
       position: absolute;
       margin: 0;
       top: -15px;
-      left: -15px;
+      left: 600px;
       width: 105px;
       color: $blue;
       font-size: 4em;
@@ -152,98 +153,6 @@ button {
   background-color: $blue;
 
   //--------------------------
-  // Shape defaults
-  //--------------------------
-
-  div.circle,
-  div.rect {
-    position: absolute;
-    perspective: 250px;
-  }
-  div.circle {
-    border-radius: 50%;
-  }
-
-  //--------------------------
-  // Colors
-  //--------------------------
-
-  $plate: rgb(211, 235, 255);
-  $counter: rgb(66, 66, 92);
-
-  //--------------------------
-  // Layers
-  //--------------------------
-
-  #counter {
-    z-index: 3;
-  }
-  #outer-plate {
-    z-index: 4;
-  }
-  #pb-jar {
-    z-index: 4;
-  }
-  #jelly-jar {
-    z-index: 4;
-  }
-  #pb-lid {
-    z-index: 4;
-  }
-  #jelly-lid {
-    z-index: 4;
-  }
-  #inner-plate {
-    z-index: 5;
-  }
-  #bread-slice-1 {
-    z-index: 6;
-  }
-  #bread-slice-2 {
-    z-index: 6;
-  }
-  #knife {
-    z-index: 7;
-  }
-  #spoon {
-    z-index: 7;
-  }
-  #pb {
-    z-index: 8;
-  }
-  #jelly {
-    z-index: 8;
-  }
-  //--------------------------
-  // Positions & Sizing
-  //--------------------------
-
-  $plate-initial-pos-x: 200px;
-  $plate-initial-pos-y: 120px;
-  $inner-plate-offset: 5px;
-  $plate-size: 100px;
-  #counter {
-    bottom: 0;
-    height: 100px;
-    width: 100%;
-    background-color: $counter;
-  }
-  #inner-plate {
-    bottom: 125px;
-    left: -205px;
-    width: 90px;
-    height: 90px;
-    border: 3px solid darken($plate, 30%);
-  }
-  #outer-plate {
-    bottom: 120px;
-    left: -200px;
-    width: 100px;
-    height: 100px;
-    background: $plate;
-  }
-
-  //--------------------------
   // Step Animations
   //--------------------------
 
@@ -266,46 +175,40 @@ button {
 //--------------------------
 // Animations
 //--------------------------
+$imgWidth: 480px;
+$imgHeight: 350px;
+$plateWidth: 100px;
 
 @keyframes step-0-inner-plate-in {
   from {
-    left: -205px;
+    transform: translateX(0);
   }
   to {
-    left: 205px;
+    transform: translateX(($imgWidth / 2) + $plateWidth);
   }
 }
 @keyframes step-0-outer-plate-in {
   from {
-    left: -200px;
+    transform: translateX(0);
   }
   to {
-    left: 200px;
+    transform: translateX(($imgWidth / 2) + $plateWidth);
   }
 }
+$lastPos: ($imgWidth / 2) + $plateWidth;
 @keyframes step-1-inner-plate-down {
   from {
-    left: 205px;
-    bottom: 125px;
-    width: 90px;
+    transform: translate($lastPos, 0);
   }
   to {
-    left: 182.5px;
-    bottom: 54px;
-    height: 65px;
-    width: 125px;
+    transform: translate($lastPos, 100px);
   }
 }
 @keyframes step-1-outer-plate-down {
   from {
-    left: 200px;
-    bottom: 125px;
-    width: 100px;
+    transform: translate($lastPos, 0);
   }
   to {
-    left: 177px;
-    bottom: 50px;
-    height: 70px;
-    width: 135px;
+    transform: translate($lastPos, 100px);
   }
 }
